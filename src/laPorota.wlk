@@ -1,14 +1,14 @@
 object laPorota { // pyme
 	var dinero = 0
 	const precio = 200
-	
+	method dinero() = dinero
 	method vender(cant){
+		brian.pagar(cant * precio)
 		dinero = dinero + cant * precio
-		gaby.pagar(cant * precio)
 	}
 }
 
-object gaby {
+object brian {
 	var medioDePago = cuentaDebito
 	method pagar(cuanto) {
 		medioDePago.descontar(cuanto)
@@ -20,8 +20,13 @@ object gaby {
 
 object cuentaDebito {
 	var saldo = 700
+	method saldo()= saldo
 	method descontar(cuanto){
-		saldo = saldo - cuanto
+		if (saldo < cuanto){
+			throw new DomainException(message="Saldo insuficiente")	
+		} 
+		saldo = saldo - cuanto			
+		
 	}
 }
 
@@ -31,3 +36,4 @@ object tarjCreditoBlack { //ilimitada!
 		deuda = deuda + cuanto
 	}
 }
+

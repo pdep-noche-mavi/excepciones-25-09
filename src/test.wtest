@@ -1,0 +1,18 @@
+import laPorota.*
+
+test "La cuenta débito lanza error si no hay saldo suficiente" {
+	assert.throwsExceptionWithMessage("Saldo insuficiente",{ cuentaDebito.descontar(1000) })
+}
+test "La cuenta débito descuenta si hay saldo suficiente" {
+	cuentaDebito.descontar(200)
+	assert.equals(500, cuentaDebito.saldo())
+}
+test "La porota vende y aumenta su dinero"{
+	laPorota.vender(1)
+	assert.equals(200, laPorota.dinero())
+}
+test "Si no hay saldo suficiente, la porota no vende"{
+	assert.throwsExceptionLike(new DomainException(message="Saldo insuficiente"),{laPorota.vender(10)})
+	assert.equals(0, laPorota.dinero())
+}
+//TODO testear tarjCreditoBlack
