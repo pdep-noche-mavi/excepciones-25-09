@@ -1,1 +1,25 @@
 import laPorota.*
+
+test "Porota queda con el mismo dinero cuando no le alcanza el saldo a cuenta débito" {
+	assert.throwsException({ laPorota.vender(4) })
+	assert.equals(0,laPorota.dinero())
+}
+test "Porota suma el dinero cuando vende" {
+	laPorota.vender(1)
+	assert.equals(200,laPorota.dinero())
+}
+test "Cuenta débito descuenta saldo"{
+	cuentaDebito.descontar(200)
+	assert.equals(500,cuentaDebito.saldo())
+}
+test "Cuenta débito no descuenta saldo si no alcanza"{
+	//assert.throwsExceptionLike(new DomainException(message="Saldo insuficiente"),
+		//{cuentaDebito.descontar(1000)})
+	assert.throwsExceptionWithMessage("Saldo insuficiente", {cuentaDebito.descontar(1000)})
+	assert.equals(700,cuentaDebito.saldo())
+}
+test "Porota puede vender mucho si tiene tarjeta de crédito"{
+	brian.medioDePago(tarjCreditoBlack)
+	laPorota.vender(5)
+	assert.equals(1000, laPorota.dinero())
+}
